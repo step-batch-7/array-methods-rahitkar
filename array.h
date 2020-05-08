@@ -18,10 +18,6 @@ typedef struct
 
 typedef Array* Array_ptr;
 
-typedef int* Int_ptr;
-typedef char* Char_ptr;
-typedef void* Void_ptr;
-
 Array_ptr map(Array *src, Mapper mapper);
 Array_ptr filter(Array *src, Predicate predicate);
 int reduce(Array *src, int init, Reducer reducer);
