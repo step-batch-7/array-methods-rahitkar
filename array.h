@@ -12,11 +12,15 @@ typedef int (*Reducer)(int, int);
 
 typedef struct
 {
-  int *array;
+  int* array;
   int length;
 } Array;
 
 typedef Array* Array_ptr;
+
+typedef int* Int_ptr;
+typedef char* Char_ptr;
+typedef void* Void_ptr;
 
 Array_ptr map(Array *src, Mapper mapper);
 Array_ptr filter(Array *src, Predicate predicate);
