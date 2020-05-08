@@ -30,12 +30,12 @@ void print_int(void *number)
   printf("%d ", *(int *)number);
 }
 
-void print_list(int *list, int length, Printer printer_func)
+void print_list(int *array, int length, Printer printer_func)
 {
   printf("[ ");
   for (int indx = 0; indx < length; indx++)
   {
-    (*printer_func)(list + indx);
+    (*printer_func)(array + indx);
   }
   printf("]\n");
 }
