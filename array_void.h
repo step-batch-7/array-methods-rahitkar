@@ -3,9 +3,7 @@
 
 #include "array.h"
 
-typedef void* Void_ptr;
-
-typedef Void_ptr Object;
+typedef void* Object;
 typedef Object (*MapperVoid)(Object);
 typedef Bool (*PredicateVoid)(Object);
 typedef Object (*ReducerVoid)(Object, Object);
