@@ -1,28 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "array.h"
+#include "array_void.h"
 
+typedef int *Int_ptr;
 typedef void (*Printer)(void *);
 
-int sqr(int num)
+Void_ptr int_sqr(Void_ptr num)
 {
-  return num * num;
-}
-
-int cube(int num)
-{
-  return sqr(num) * num;
-}
-
-Bool is_even(int num)
-{
-  return !(num % 2);
-}
-
-int sum(int num, int previous_sum)
-{
-  return num + previous_sum;
+  Int_ptr result = malloc(sizeof(int));
+  *result = (*(Int_ptr)num * *(Int_ptr)num);
+  return result;
 }
 
 void print_int(void *number)
@@ -30,32 +18,39 @@ void print_int(void *number)
   printf("%d ", *(int *)number);
 }
 
-void print_list(int *array, int length, Printer printer_func)
+void print_void_array(ArrayVoid_ptr src, Printer print)
 {
   printf("[ ");
-  for (int indx = 0; indx < length; indx++)
+
+  for (int indx = 0; indx < src->length; indx++)
   {
-    (*printer_func)(array + indx);
+    (*print)(src->array[indx]);
   }
   printf("]\n");
 }
 
 int main(void)
 {
-  int int_array[4] = {1, 2, 3, 4};
-  Array_ptr array = malloc(sizeof(Array));
-  array->array = int_array;
-  array->length = 4;
+  int *num1 = malloc(sizeof(int));
+  *num1 = 1;
 
-  Array_ptr new_array = map(array, &sqr);
-  print_list(new_array->array, new_array->length, &print_int);
+  int *num2 = malloc(sizeof(int));
+  *num2 = 2;
 
-  new_array = filter(array, &is_even);
-  print_list(new_array->array, new_array->length, &print_int);
+  int *num3 = malloc(sizeof(int));
+  *num3 = 3;
 
-  int result = reduce(array, 0, &sum);
-  print_int(&result);
-  printf("\n");
+  int *num4 = malloc(sizeof(int));
+  *num4 = 4;
+
+  int *numbers[4] = {num1, num2, num3, num4};
+
+  ArrayVoid_ptr array_void = malloc(sizeof(ArrayVoid));
+  array_void->array = (Void_ptr *)&numbers[0];
+  array_void->length = 4;
+
+  ArrayVoid_ptr mapped_void_array = map_void(array_void, &int_sqr);
+  print_void_array(mapped_void_array, &print_int);
 
   return 0;
 }
