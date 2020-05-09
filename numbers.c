@@ -13,6 +13,11 @@ Void_ptr int_sqr(Void_ptr num)
   return result;
 }
 
+Bool is_even(Void_ptr num)
+{
+  return !(*(Int_ptr)num % 2);
+}
+
 void print_int(void *number)
 {
   printf("%d ", *(int *)number);
@@ -51,6 +56,9 @@ int main(void)
 
   ArrayVoid_ptr mapped_void_array = map_void(array_void, &int_sqr);
   print_void_array(mapped_void_array, &print_int);
+
+  ArrayVoid_ptr filtered_void_array = filter_void(array_void, &is_even);
+  print_void_array(filtered_void_array, &print_int);
 
   return 0;
 }
