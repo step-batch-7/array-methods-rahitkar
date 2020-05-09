@@ -13,8 +13,10 @@ void test_map(Array_ptr array)
 {
   printf("testing map:\n");
   int expectation[4] = {1, 4, 9, 16};
-  Array_ptr new_array = map(array, &sqr);
-  compare_arrayes(new_array->array, expectation, 4);
+  Array_ptr actual = map(array, &sqr);
+  Bool result = compare_arrayes(actual->array, expectation, 4, &are_int_values_equal);
+  show_result(actual->array, expectation, actual->length, result, &print_int);
+
   printf("\n");
 }
 
@@ -27,8 +29,10 @@ void test_filter(Array_ptr array)
 {
   printf("testing filter:\n");
   int expectation[4] = {2, 4};
-  Array_ptr new_array = filter(array, &is_even);
-  compare_arrayes(new_array->array, expectation, 2);
+  Array_ptr actual = filter(array, &is_even);
+  Bool result = compare_arrayes(actual->array, expectation, 2, &are_int_values_equal);
+  show_result(actual->array, expectation, actual->length, result, &print_int);
+
   printf("\n");
 }
 
@@ -43,14 +47,14 @@ void test_reduce(Array_ptr array)
   int expectation = 10;
   int actual = reduce(array, 0, &sum);
 
-  printf("actual:");
+  printf("actual: ");
   print_int(&actual);
   printf("\n");
-  printf("expectation:");
+  printf("expectation: ");
   print_int(&expectation);
   printf("\n");
 
-  if (are_values_equal(&actual, &expectation))
+  if (are_int_values_equal(&actual, &expectation))
   {
     printf("✓ values are equal");
     printf("\n");

@@ -2,17 +2,17 @@
 
 #include "compare_array.h"
 
-Bool are_values_equal(Void_ptr a, Void_ptr b)
+Bool are_int_values_equal(Void_ptr num1, Void_ptr num2)
 {
-  return *(Int_ptr)a == *(Int_ptr)b;
+  return *(Int_ptr)num1 == *(Int_ptr)num2;
 }
 
 void print_int(Void_ptr number)
 {
-  printf("%d ", *(int *)number);
+  printf("%d ", *(Int_ptr)number);
 }
 
-void print_array(Void_ptr list, int length, Printer printer_func, Char_ptr message)
+void print_array(Void_ptr list, int length, Char_ptr message, Printer printer_func)
 {
   printf("%s: [ ", message);
   for (int indx = 0; indx < length; indx++)
@@ -22,19 +22,27 @@ void print_array(Void_ptr list, int length, Printer printer_func, Char_ptr messa
   printf("]\n");
 }
 
-void compare_arrayes(Int_ptr actual, Int_ptr expectation, int length)
+Bool compare_arrayes(Void_ptr actual, Void_ptr expectation, int length, Compare check_equality)
 {
   for (int i = 0; i < length; i++)
   {
-    if (!are_values_equal(&actual[i], &expectation[i]))
+    if (!(*check_equality)((actual + (i * sizeof(int))), (expectation + (i * sizeof(int)))))
     {
-      print_array(actual, length, &print_int, "actual");
-      print_array(expectation, length, &print_int, "expectation");
-      printf("✘ both array values are not same\n");
-      return;
+      return 0;
     }
   }
-  print_array(actual, length, &print_int, "actual");
-  print_array(expectation, length, &print_int, "expectation");
+  return 1;
+}
+
+void show_result(Void_ptr actual, Void_ptr expectation, int length, Bool result,Printer print)
+{
+  print_array(actual, length, "actual", print);
+  print_array(expectation, length, "expectation", print);
+
+  if (!result)
+  {
+  printf("✘ both array values are not same\n");
+  return;
+  }
   printf("✓ both array values are equal\n");
 }
