@@ -41,24 +41,24 @@ void print_void_array(ArrayVoid_ptr src, Printer print)
   printf("]\n");
 }
 
+Object create_void_array(Object array, int length, int element_size)
+{
+  Object* new_array = malloc(sizeof(Object) * length);
+
+  for(int indx = 0; indx < length; indx++)
+  {
+    new_array[indx] = array + (indx * element_size);
+  }
+  return new_array;
+}
+
 int main(void)
 {
-  int *num1 = malloc(sizeof(int));
-  *num1 = 1;
 
-  int *num2 = malloc(sizeof(int));
-  *num2 = 2;
-
-  int *num3 = malloc(sizeof(int));
-  *num3 = 3;
-
-  int *num4 = malloc(sizeof(int));
-  *num4 = 4;
-
-  int *numbers[4] = {num1, num2, num3, num4};
+  int  numbers[4] = {1, 2, 3, 4};
 
   ArrayVoid_ptr array_void = malloc(sizeof(ArrayVoid));
-  array_void->array = (Object *)&numbers[0];
+  array_void->array = create_void_array(numbers, 4, 4);
   array_void->length = 4;
 
   ArrayVoid_ptr mapped_void_array = map_void(array_void, &int_sqr);
