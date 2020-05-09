@@ -6,16 +6,23 @@
 typedef int *Int_ptr;
 typedef void (*Printer)(void *);
 
-Void_ptr int_sqr(Void_ptr num)
+Object int_sqr(Object num)
 {
   Int_ptr result = malloc(sizeof(int));
   *result = (*(Int_ptr)num * *(Int_ptr)num);
   return result;
 }
 
-Bool is_even(Void_ptr num)
+Bool is_even(Object num)
 {
   return !(*(Int_ptr)num % 2);
+}
+
+Object int_sum(Object num, Object cotext)
+{
+  Int_ptr result = malloc(sizeof(int));
+  *result = *(Int_ptr)num + *(Int_ptr)cotext;
+  return result;
 }
 
 void print_int(void *number)
@@ -51,7 +58,7 @@ int main(void)
   int *numbers[4] = {num1, num2, num3, num4};
 
   ArrayVoid_ptr array_void = malloc(sizeof(ArrayVoid));
-  array_void->array = (Void_ptr *)&numbers[0];
+  array_void->array = (Object *)&numbers[0];
   array_void->length = 4;
 
   ArrayVoid_ptr mapped_void_array = map_void(array_void, &int_sqr);
@@ -59,6 +66,12 @@ int main(void)
 
   ArrayVoid_ptr filtered_void_array = filter_void(array_void, &is_even);
   print_void_array(filtered_void_array, &print_int);
+
+  int* init = malloc(sizeof(int));
+  *init = 0;
+  Object result = reduce_void(array_void, init,&int_sum);
+  print_int(result);
+  printf("\n");
 
   return 0;
 }
