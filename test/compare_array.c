@@ -24,9 +24,13 @@ void print_array(Void_ptr list, int length, Char_ptr message, Printer printer_fu
 
 Bool compare_arrayes(Void_ptr actual, Void_ptr expectation, int length, Compare check_equality)
 {
+  Void_ptr actual_ref; 
+  Void_ptr expectation_ref;
   for (int i = 0; i < length; i++)
   {
-    if (!(*check_equality)((actual + (i * sizeof(int))), (expectation + (i * sizeof(int)))))
+    actual_ref = (actual + (i * sizeof(int)));
+    expectation_ref = (expectation + (i * sizeof(int)));
+    if (!(*check_equality)(actual_ref, expectation_ref))
     {
       return 0;
     }
