@@ -24,4 +24,5 @@ int main(void)
   array_void->length = 4;
 
   test_void_map(array_void);
+  test_void_filter(array_void);
 }
