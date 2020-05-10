@@ -23,7 +23,7 @@ ArrayVoid_ptr filter_void(ArrayVoid_ptr src, PredicateVoid predicate)
 
   for (int indx = 0; indx < src->length; indx++)
   {
-    if ((*predicate)(src->array[indx]) == 1)
+    if ((*predicate)(src->array[indx]))
     {
       new_array->array[new_array->length] = src->array[indx];
       new_array->length++;
