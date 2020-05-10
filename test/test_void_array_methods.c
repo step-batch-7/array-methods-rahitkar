@@ -11,9 +11,9 @@ typedef void (*Printer)(void *);
 
 Object create_void_array(Object array, int length, int element_size)
 {
-  Object* new_array = malloc(sizeof(Object) * length);
+  Object *new_array = malloc(sizeof(Object) * length);
 
-  for(int indx = 0; indx < length; indx++)
+  for (int indx = 0; indx < length; indx++)
   {
     new_array[indx] = array + (indx * element_size);
   }
@@ -29,7 +29,7 @@ Object void_int_sqr(Object num)
 
 void test_void_map(ArrayVoid_ptr array_void)
 {
-printf("testing map_void:\n");
+  printf("testing map_void:\n");
   int expectation[4] = {1, 4, 9, 16};
   ArrayVoid_ptr expectation_void = malloc(sizeof(ArrayVoid));
   expectation_void->array = create_void_array(expectation, 4, 4);
@@ -50,7 +50,7 @@ Bool void_is_even(Object num)
 
 void test_void_filter(ArrayVoid_ptr array_void)
 {
-printf("testing filter_void:\n");
+  printf("testing filter_void:\n");
   int expectation[2] = {2, 4};
   ArrayVoid_ptr expectation_void = malloc(sizeof(ArrayVoid));
   expectation_void->array = create_void_array(expectation, 2, 4);
@@ -61,5 +61,39 @@ printf("testing filter_void:\n");
   Bool result = compare_void_arrayes(actual_void, expectation_void, &are_int_values_equal);
   show_result_for_void_array(actual_void, expectation_void, result, &print_int);
 
+  printf("\n");
+}
+
+Object int_sum(Object num, Object cotext)
+{
+  Int_ptr result = malloc(sizeof(int));
+  *result = *(Int_ptr)num + *(Int_ptr)cotext;
+  return result;
+}
+
+void test_void_reduce(ArrayVoid_ptr array_void)
+{
+  printf("testing reduce:\n");
+  int* expectation = malloc(sizeof(int));
+  *expectation = 10;
+
+  int* init = malloc(sizeof(int));
+  *init = 0;
+  Object actual = reduce_void(array_void, init, &int_sum);
+
+  printf("actual: ");
+  print_int(actual);
+  printf("\n");
+  printf("expectation: ");
+  print_int(expectation);
+  printf("\n");
+
+  if (are_int_values_equal(actual, expectation))
+  {
+    printf("✓ values are equal");
+    printf("\n");
+    return;
+  }
+  printf("✘ values are not equal");
   printf("\n");
 }

@@ -9,4 +9,7 @@ void test_void_map(ArrayVoid_ptr array_void);
 Bool void_is_even(Object num);
 void test_void_filter(ArrayVoid_ptr array_void);
 
+Object int_sum(Object num, Object cotext);
+void test_void_reduce(ArrayVoid_ptr array_void);
+
 #endif

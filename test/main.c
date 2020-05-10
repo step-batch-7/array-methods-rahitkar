@@ -25,4 +25,5 @@ int main(void)
 
   test_void_map(array_void);
   test_void_filter(array_void);
+  test_void_reduce(array_void);
 }
